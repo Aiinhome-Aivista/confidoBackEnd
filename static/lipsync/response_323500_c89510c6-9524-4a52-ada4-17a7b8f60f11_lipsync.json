@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "soundFile": "static/audio/response_323500_c89510c6-9524-4a52-ada4-17a7b8f60f11.ogg",
+    "duration": 6.31
+  },
+  "mouthCues": [
+    {
+      "start": 0.0,
+      "end": 0.1,
+      "value": "X"
+    },
+    {
+      "start": 0.1,
+      "end": 0.28,
+      "value": "F"
+    },
+    {
+      "start": 0.28,
+      "end": 0.35,
+      "value": "B"
+    },
+    {
+      "start": 0.35,
+      "end": 0.43,
+      "value": "A"
+    },
+    {
+      "start": 0.43,
+      "end": 0.52,
+      "value": "E"
+    },
+    {
+      "start": 0.52,
+      "end": 0.8,
+      "value": "B"
+    },
+    {
+      "start": 0.8,
+      "end": 1.78,
+      "value": "X"
+    },
+    {
+      "start": 1.78,
+      "end": 1.95,
+      "value": "B"
+    },
+    {
+      "start": 1.95,
+      "end": 2.09,
+      "value": "C"
+    },
+    {
+      "start": 2.09,
+      "end": 2.16,
+      "value": "B"
+    },
+    {
+      "start": 2.16,
+      "end": 2.3,
+      "value": "F"
+    },
+    {
+      "start": 2.3,
+      "end": 2.51,
+      "value": "C"
+    },
+    {
+      "start": 2.51,
+      "end": 2.58,
+      "value": "G"
+    },
+    {
+      "start": 2.58,
+      "end": 2.72,
+      "value": "F"
+    },
+    {
+      "start": 2.72,
+      "end": 3.07,
+      "value": "B"
+    },
+    {
+      "start": 3.07,
+      "end": 4.01,
+      "value": "X"
+    },
+    {
+      "start": 4.01,
+      "end": 4.39,
+      "value": "C"
+    },
+    {
+      "start": 4.39,
+      "end": 4.46,
+      "value": "B"
+    },
+    {
+      "start": 4.46,
+      "end": 4.53,
+      "value": "C"
+    },
+    {
+      "start": 4.53,
+      "end": 4.74,
+      "value": "B"
+    },
+    {
+      "start": 4.74,
+      "end": 5.02,
+      "value": "F"
+    },
+    {
+      "start": 5.02,
+      "end": 5.16,
+      "value": "B"
+    },
+    {
+      "start": 5.16,
+      "end": 5.37,
+      "value": "C"
+    },
+    {
+      "start": 5.37,
+      "end": 5.44,
+      "value": "B"
+    },
+    {
+      "start": 5.44,
+      "end": 6.31,
+      "value": "X"
+    }
+  ]
+}

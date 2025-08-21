@@ -1,0 +1,12 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+.vscode/
+# Environment variables
+.env
+
+# Virtual environment
+venv/
+.venv/
+/venv
