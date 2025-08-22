@@ -38,7 +38,6 @@ def session_controller():
 
         # Call the model function to insert into DB
         is_created = create_session_model(session_id, user_id, username, language_id, avatar_id, avatar_name)
-        print(f"Session creation status: {is_created}")
 
         if is_created:
             return jsonify({

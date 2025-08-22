@@ -16,6 +16,11 @@ CORS(app)
 # Define the base URL for the API
 BASE_URL = '/auth'
 
+# default route
+@app.route("/", methods=["GET"])
+def index():
+    return "Welcome to the Chat API!"
+
 # login user
 @app.route(BASE_URL+ "/login", methods=["POST"])
 def login():
