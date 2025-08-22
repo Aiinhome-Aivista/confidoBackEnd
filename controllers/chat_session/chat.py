@@ -2,9 +2,10 @@ import os
 import re
 import uuid
 import json
-import subprocess
 import asyncio
+import platform
 import edge_tts
+import subprocess
 from pydub import AudioSegment
 from pydub.utils import mediainfo
 from flask import jsonify, request
@@ -33,6 +34,21 @@ STATIC_AUDIO_DIR = "static/audio"
 STATIC_LIPSYNC_DIR = "static/lipsync"
 os.makedirs(STATIC_AUDIO_DIR, exist_ok=True)
 os.makedirs(STATIC_LIPSYNC_DIR, exist_ok=True)
+
+# Detect OS
+SYSTEM = platform.system()
+
+# Base path where Rhubarb is stored in repo
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+BIN_DIR = os.path.join(PROJECT_ROOT, "static", "bin")
+
+# Resolve Rhubarb path based on OS
+if SYSTEM == "Windows":
+    rhubarb_path = os.path.join(BIN_DIR, "rhubarb.exe")
+else:
+    rhubarb_path = os.path.join(BIN_DIR, "rhubarb")
+
+print("Resolved rhubarb path:", rhubarb_path, "Exists?", os.path.isfile(rhubarb_path))
 
 # generate TTS audio using Edge TTS
 async def _edge_speak(text, voice, filename):
@@ -63,7 +79,6 @@ def generate_tts_audio(text, avatar_id, session_id):
 # Rhubarb lip-sync JSON
 def generate_lipsync_json(audio_filename, text, session_id, unique_id):
     json_output = f"{STATIC_LIPSYNC_DIR}/response_{session_id}_{unique_id}_lipsync.json"
-    rhubarb_path = r"C:\Rhubarb-Lip-Sync-1.14.0-Windows\rhubarb.exe"
 
     # Write dialogue to temp file
     dialog_file = f"static/audio/dialog_{session_id}_{unique_id}.txt"
@@ -143,7 +158,8 @@ def chat_controller():
     # Generate AI response 
     if user_input == "":
         prompt = ("You are starting a communication session.\n"
-                  "Greet the user and ask the first question. Be friendly and concise.")
+                  "Greet the user and ask the first question. Be friendly and concise.\n"
+                  "Important: Do NOT use emojis or special symbols in your response.")
     else:
         history = get_history(session_id)
         print("history:", history)
@@ -153,6 +169,7 @@ def chat_controller():
         prompt = ("You are chatting with a user. Continue the conversation naturally.\n\n"
                   f"to  better understand the context of the query {history}\n\n"
                   f"here is the query {user_input} .respond the query\n\n"
+                  "Important: Do NOT use emojis or special symbols in your response.\n"
                   "Respond to keep the discussion flowing.")
 
     print(f"User input: {user_input}")

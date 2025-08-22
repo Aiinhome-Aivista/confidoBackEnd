@@ -130,7 +130,7 @@ def run_interactive():
             continue
 
         voice = characters[choice]
-        text = f"Hello there! 👋 I'm {choice.capitalize()}, your personal conversation partner. Here, we'll practice speaking, remove hesitation, and build your confidence—step by step. Whatever you say, we'll do it with confidence!"
+        text = f"Hello there! I'm {choice.capitalize()}, your personal conversation partner. Here, we'll practice speaking, remove hesitation, and build your confidence—step by step. Whatever you say, we'll do it with confidence!"
 
         print(f"\n🎙 Generating for {choice}...")
         mp3_file, ogg_file, uid = generate_tts_audio(text, voice, choice)
