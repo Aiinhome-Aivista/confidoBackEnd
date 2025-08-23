@@ -6,7 +6,7 @@ import asyncio
 import platform
 import edge_tts
 import subprocess
-from pydub import AudioSegment
+from pydub import AudioSegment, utils
 from pydub.utils import mediainfo
 from flask import jsonify, request
 from models.mistral_client import call_mistral
@@ -38,18 +38,35 @@ os.makedirs(STATIC_LIPSYNC_DIR, exist_ok=True)
 # Detect OS
 SYSTEM = platform.system()
 
-# Base path where Rhubarb is stored
+# Base path where binaries are stored
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BIN_DIR = os.path.join(PROJECT_ROOT, "static", "bin")
 
 # Get the path to rhubarb.exe or rhubarb binary
 if SYSTEM == "Windows":
     rhubarb_path = os.path.join(BIN_DIR, "rhubarb.exe")
+    ffmpeg_path = os.path.join(BIN_DIR, "ffmpeg.exe")
+    ffprobe_path = os.path.join(BIN_DIR, "ffprobe.exe")
 else:
     rhubarb_path = os.path.join(BIN_DIR, "rhubarb")
+    ffmpeg_path = os.path.join(BIN_DIR, "ffmpeg")
+    ffprobe_path = os.path.join(BIN_DIR, "ffprobe")
 
-# Verify rhubarb path
+# Force pydub to use bundled binaries
+AudioSegment.converter = ffmpeg_path
+AudioSegment.ffprobe = ffprobe_path
+
+# Force mediainfo to use our ffprobe
+utils.get_prober_name = lambda: ffprobe_path
+
+# Also set env vars for safety
+os.environ["FFMPEG_BINARY"] = ffmpeg_path
+os.environ["FFPROBE_BINARY"] = ffprobe_path
+
+# Verify paths
 print("Resolved rhubarb path:", rhubarb_path, "Exists?", os.path.isfile(rhubarb_path))
+print("Resolved ffmpeg path:", ffmpeg_path, "Exists?", os.path.isfile(ffmpeg_path))
+print("Resolved ffprobe path:", ffprobe_path, "Exists?", os.path.isfile(ffprobe_path))
 
 # generate TTS audio using Edge TTS
 async def _edge_speak(text, voice, filename):
