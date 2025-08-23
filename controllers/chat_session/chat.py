@@ -38,16 +38,17 @@ os.makedirs(STATIC_LIPSYNC_DIR, exist_ok=True)
 # Detect OS
 SYSTEM = platform.system()
 
-# Base path where Rhubarb is stored in repo
+# Base path where Rhubarb is stored
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BIN_DIR = os.path.join(PROJECT_ROOT, "static", "bin")
 
-# Resolve Rhubarb path based on OS
+# Get the path to rhubarb.exe or rhubarb binary
 if SYSTEM == "Windows":
     rhubarb_path = os.path.join(BIN_DIR, "rhubarb.exe")
 else:
     rhubarb_path = os.path.join(BIN_DIR, "rhubarb")
 
+# Verify rhubarb path
 print("Resolved rhubarb path:", rhubarb_path, "Exists?", os.path.isfile(rhubarb_path))
 
 # generate TTS audio using Edge TTS
@@ -85,6 +86,7 @@ def generate_lipsync_json(audio_filename, text, session_id, unique_id):
     with open(dialog_file, "w", encoding="utf-8") as f:
         f.write(text)
 
+    # Run Rhubarb
     subprocess.run([
         rhubarb_path,
         audio_filename,
@@ -168,16 +170,18 @@ def chat_controller():
         print("dialog:", dialog)
         prompt = ("You are chatting with a user. Continue the conversation naturally.\n\n"
                   f"to  better understand the context of the query {history}\n\n"
-                  f"here is the query {user_input} .respond the query\n\n"
+                  f"here is the query {user_input} .only respond the query\n\n"
                   "Important: Do NOT use emojis or special symbols in your response.\n"
                   "Respond to keep the discussion flowing.")
 
     print(f"User input: {user_input}")
     
+    # Call Mistral API
     raw_ai_response = call_mistral(prompt)
     print(f"Raw AI response: {raw_ai_response}")
     
-    translated_ai   = translate_text(raw_ai_response, lang_name)
+    # translate text from english to hindi or bengali if needed
+    translated_ai = translate_text(raw_ai_response, lang_name)
     # print(f"Translated AI response: {translated_ai}")
 
     # Save messages
@@ -187,8 +191,10 @@ def chat_controller():
 
     if user_input:
         history = get_history(session_id)
+        
         # Save communication history
         save_communication_history(session_id, history, lang_name, user_id)
+        
         # Save chat history
         save_chat_history(session_id, history)
 

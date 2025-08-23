@@ -46,12 +46,12 @@ def session():
 def chat():
     return chat_controller()
 
-# Serve audio files
+# Serve audio files to download
 @app.route('/audio/<filename>')
 def serve_audio(filename):
     return send_from_directory('static/audio', filename)
 
-# Serve lipsync JSON files
+# Serve lipsync JSON files to download
 @app.route('/lipsync/<filename>')
 def serve_lipsync(filename):
     return send_from_directory('static/lipsync', filename)
