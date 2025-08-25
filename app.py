@@ -4,6 +4,7 @@ from flask import send_from_directory
 from controllers.auth.login import login_controller
 from controllers.auth.logout import logout_controller
 from controllers.chat_session.chat import chat_controller
+from controllers.chat_session.greet import greet_controller
 from controllers.chat_session.session import session_controller
 from controllers.chat_session.language import language_controller
 
@@ -45,6 +46,11 @@ def session():
 @app.route('/chat', methods=['POST'])
 def chat():
     return chat_controller()
+
+# Greet endpoint
+@app.route('/greet', methods=['POST'])
+def greet():
+    return greet_controller()
 
 # Serve audio files to download
 @app.route('/audio/<filename>')
